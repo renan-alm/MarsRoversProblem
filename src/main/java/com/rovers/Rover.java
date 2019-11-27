@@ -73,7 +73,7 @@ public class Rover implements Machine {
             if ( d.toString().equals(Direction.NORTH.toString()) ) {
                 this.d = Direction.WEST;
             }else{
-                this.d = d.previous();;
+                this.d = d.previous();
             }
         }
         System.out.println("Rover set to " + d.toString()+ ".");
@@ -84,13 +84,13 @@ public class Rover implements Machine {
         int x = coordinates.getX();
         int y = coordinates.getY();
 
-        if (n.equals("N") && coordinates.getY() != edgeY) {
+        if (n.equals("NORTH") && coordinates.getY() != edgeY) {
             history.add(coordinates.setCoordinates(x, y+1));
-        } else if (n.equals("E") && x != edgeX) {
+        } else if (n.equals("EAST") && x != edgeX) {
             history.add(coordinates.setCoordinates(x+1, y));
-        } else if (n.equals("S") && y != 0) {
+        } else if (n.equals("SOUTH") && y != 0) {
             history.add(coordinates.setCoordinates(x, y-1));
-        } else if (n.equals("W") && x != 0) {
+        } else if (n.equals("WEST") && x != 0) {
             history.add(coordinates.setCoordinates(x-1, y));
         }
         else {
