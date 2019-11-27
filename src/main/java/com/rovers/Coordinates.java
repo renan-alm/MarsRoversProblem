@@ -1,6 +1,6 @@
 package com.rovers;
 
-public class Coordinate {
+public class Coordinates {
     private int x;
     private int y;
 
@@ -10,7 +10,7 @@ public class Coordinate {
         return "(" + this.x + ", " + this.y + ")";
     }
 
-    public Coordinate() { // Default values for a coordinate
+    public Coordinates() { // Default values for a coordinate
         this.x = 0;
         this.y = 0;
     }

@@ -11,17 +11,9 @@ public class Rover implements Machine {
 
     private int edgeX;
     private int edgeY;
-    private int marker;
-    private Coordinate coordinate = new Coordinate();
+    private Direction d = Direction.NORTH;
+    private Coordinates coordinates = new Coordinates();
     private final ArrayList<String> history = new ArrayList<>();
-
-    private static final ArrayList<String> orientation = new ArrayList<String>(){{
-        add("N");
-        add("E");
-        add("S");
-        add("W");
-    }};
-
 
     Rover(Plateau plateau){
         this.edgeX = plateau.getEdgeX();
@@ -29,18 +21,18 @@ public class Rover implements Machine {
     }
 
     Rover withCoordinates(int x, int y) {
-        coordinate.setCoordinates(x, y);
-        this.marker = 0;
+        coordinates.setCoordinates(x, y);
+        this.d = Direction.NORTH;
         showStatus();
         return this;
     }
-    Rover withOrientation(int marker){
-        this.marker = marker;
+    Rover withDirection(Direction d){
+        this.d = d;
         return this;
     }
 
     public void showStatus(){
-        System.out.println("Rover current position: (" + coordinate.getX() + ", " + coordinate.getY() + ", "  + orientation.get(marker) + ")");
+        System.out.println("Rover current position: (" + coordinates.getX() + ", " + coordinates.getY() + ", "  + d.toString() + ")");
     }
 
     void start() {
@@ -71,31 +63,35 @@ public class Rover implements Machine {
     }
 
     private void turnRover(String leftRight) {
-        if (leftRight.equals("R")){  // Meaning, string equals to right
-            marker++;
-            if (marker == 4)
-                marker = 0;
-        }else{                      // Meaning, string equals to left
-            marker--;
-            if (marker == -1)
-                marker = 3;
+        if (leftRight.equals("R")){  // TURN RIGHT
+            if (d.toString().equals(Direction.WEST.toString())){
+                this.d = Direction.NORTH;
+            }else{
+                this.d = d.next();
+            }
+        }else{    // TURN LEFT
+            if ( d.toString().equals(Direction.NORTH.toString()) ) {
+                this.d = Direction.WEST;
+            }else{
+                this.d = d.previous();;
+            }
         }
-        System.out.println("Rover set to " + orientation.get(marker) + ".");
+        System.out.println("Rover set to " + d.toString()+ ".");
     }
 
     private void moveForward() {
-        String n = orientation.get(marker);
-        int x = coordinate.getX();
-        int y = coordinate.getY();
+        String n = d.toString();
+        int x = coordinates.getX();
+        int y = coordinates.getY();
 
-        if (n.equals("N") && coordinate.getY() != edgeY) {
-            history.add(coordinate.setCoordinates(x, y+1));
+        if (n.equals("N") && coordinates.getY() != edgeY) {
+            history.add(coordinates.setCoordinates(x, y+1));
         } else if (n.equals("E") && x != edgeX) {
-            history.add(coordinate.setCoordinates(x+1, y));
+            history.add(coordinates.setCoordinates(x+1, y));
         } else if (n.equals("S") && y != 0) {
-            history.add(coordinate.setCoordinates(x, y-1));
+            history.add(coordinates.setCoordinates(x, y-1));
         } else if (n.equals("W") && x != 0) {
-            history.add(coordinate.setCoordinates(x-1, y));
+            history.add(coordinates.setCoordinates(x-1, y));
         }
         else {
             System.out.println("You are by the edge of the plateau. Do something else.");
