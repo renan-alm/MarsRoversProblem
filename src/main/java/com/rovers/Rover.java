@@ -5,13 +5,9 @@ import java.util.Scanner;
 
 public class Rover implements Machine {
 
-    // New requirements:
-    // 1. Plateau as an input to Rovers -- CHECK
-    // 2. Save history of the Rover -- CHECK
-    // 3. Create a correction/validation method to reduce lines from moving left and right -- CHECK
-    // 4. Exercise the use of methods to initialize objects --
-    // 5. Implement a REST API   --- CXF
-    // 6. Objects out of Status or History
+    // NEW Requirements:
+    // 5. Objects out of Status or History - Check
+    // 6. Implement a REST API   --- CXF
 
     private int edgeX;
     private int edgeY;
@@ -113,5 +109,4 @@ public class Rover implements Machine {
             System.out.println(i);
         System.out.println(" -- ");
     }
-
 }
