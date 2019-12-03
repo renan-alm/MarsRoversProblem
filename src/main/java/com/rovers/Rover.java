@@ -5,39 +5,53 @@ import java.util.Scanner;
 
 public class Rover implements Machine {
 
-    // NEW Requirements:
-    // 5. Objects out of Status or History - Check
-    // 6. Implement a REST API   --- CXF
+    public int getEdgeX() {
+        return edgeX;
+    }
 
-    private int edgeX;
-    private int edgeY;
-    private Direction d = Direction.NORTH;
+    public int getEdgeY() {
+        return edgeY;
+    }
+
+    private int edgeX = -1;
+    private int edgeY = -1;
+
+    public Direction getD() {
+        return d;
+    }
+
+    private Direction d;
     private Coordinates coordinates = new Coordinates();
     private final ArrayList<String> history = new ArrayList<>();
 
-    Rover(Plateau plateau){
-        this.edgeX = plateau.getEdgeX();
-        this.edgeY = plateau.getEdgeY();
+    public Rover() {
+        this.edgeX = 2;
+        this.edgeX = 2;
+        d = Direction.NORTH;
+        coordinates = new Coordinates(1,1); // Coordinates cannot be bigger than the edges of the plateau
     }
-
-    Rover withCoordinates(int x, int y) {
+    public Rover withCoordinates(int x, int y) {
         coordinates.setCoordinates(x, y);
-        this.d = Direction.NORTH;
-        showStatus();
         return this;
     }
-    Rover withDirection(Direction d){
+    public Rover withDirection(Direction d){
         this.d = d;
         return this;
     }
-
-    public void showStatus(){
-        System.out.println("Rover current position: (" + coordinates.getX() + ", " + coordinates.getY() + ", "  + d.toString() + ")");
+    public Rover withPlateau(Plateau plateau){
+        this.edgeX = plateau.getEdgeX();
+        this.edgeY = plateau.getEdgeY();
+        return this;
+    }
+    @Override  // From the interface Machine
+    public String showStatus(){
+        return ( coordinates.getX() + ", " + coordinates.getY() );
     }
 
     void start() {
         boolean exit = false;
         String option;
+        String status;
         Scanner scanner = new Scanner(System.in);
         while (!exit){
             System.out.println(" == Pick an action:");
@@ -45,16 +59,22 @@ public class Rover implements Machine {
             System.out.println("L: Turn left        R: Turn right   E: Exit rover");
             option = scanner.nextLine();
 
-            if (option.equals("L"))
+            if (option.equals("L")){
                 turnRover("L");
-            else if(option.equals("R"))
+            }
+            else if(option.equals("R")) {
                 turnRover("R");
-            else if(option.equals("M"))
+            }
+            else if(option.equals("M")) {
                 moveForward();
-            else if(option.equals("S"))
-                showStatus();
-            else if(option.equals("H"))
+            }
+            else if(option.equals("S")) {
+                status = showStatus();
+                System.out.println("Rover current position: (" + status + ", "  + d.toString() + ")");
+            }
+            else if(option.equals("H")) {
                 displayHistory();
+            }
             else {
                 System.out.println("Exiting rover execution.");
                 exit = true;
@@ -62,7 +82,7 @@ public class Rover implements Machine {
         }
     }
 
-    private void turnRover(String leftRight) {
+    public void turnRover(String leftRight) {
         if (leftRight.equals("R")){  // TURN RIGHT
             if (d.toString().equals(Direction.WEST.toString())){
                 this.d = Direction.NORTH;
@@ -79,7 +99,7 @@ public class Rover implements Machine {
         System.out.println("Rover set to " + d.toString()+ ".");
     }
 
-    private void moveForward() {
+    public void moveForward() {
         String n = d.toString();
         int x = coordinates.getX();
         int y = coordinates.getY();
@@ -104,5 +124,13 @@ public class Rover implements Machine {
         for (String i : history)
             System.out.println(i);
         System.out.println(" -- ");
+    }
+
+    public boolean isDeployed(){
+        if (edgeY == -1 || edgeX == -1){
+            return false;
+        }else{
+            return true;
+        }
     }
 }

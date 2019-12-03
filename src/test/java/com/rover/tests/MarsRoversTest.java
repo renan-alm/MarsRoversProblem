@@ -2,38 +2,68 @@ package com.rover.tests;
 
 import com.rovers.Direction;
 import com.rovers.Plateau;
+import com.rovers.Rover;
 import org.junit.Assert;
 import org.junit.Test;
 
 public class MarsRoversTest {
 
     @Test
-    public void testPlateauDimension(){
-        // Given a plateau
-        Plateau plateau = new Plateau();
-        // When the plateau has the below dimensions
-        plateau.setEdgeX(8);
-        plateau.setEdgeY(8);
-        // Then
-        Assert.assertEquals(8, plateau.getEdgeX());
-        Assert.assertEquals(8, plateau.getEdgeY());
+    public void testRoverWithPlateauLimits(){
+        // Given a Rover deployed on a plateau
+        Plateau plateau = new Plateau(8,8);
+        // When a Rover is instantiated
+        Rover rover = new Rover().withPlateau(plateau);
+        // Then the rover limits will be defined according to the plateau
+        Assert.assertEquals(8, rover.getEdgeX());
+        Assert.assertEquals(8, rover.getEdgeY());
     }
-
     @Test
-    public void testDirectionEnum(){
-        Direction d = Direction.WEST;
-
-        //System.out.println(d.next().toString());
-        //
-
-/*
-        Assert.assertEquals(Direction.NORTH, d.next());
-        d = Direction.NORTH;
-        Assert.assertEquals(Direction.WEST, d.previous());
-*/
-
-
-        //Assert.assertEquals("NORTH", Direction.values()[0].toString());
-        //Assert.assertEquals("NORTH", Direction.values()[0].toString());
+    public void testTurnRoverRightFromNorth(){
+        //Given a rover deployed assuming NORTH as default
+        Rover rover = new Rover();
+        //When the rover is moved to the right
+        rover.turnRover("R");
+        //Then the rover variable will be towards RIGHT
+        Assert.assertEquals("EAST", rover.getD().toString() );
+        Assert.assertEquals("1, 1", rover.showStatus() );
+    }
+    @Test
+    public void testTurnRoverLeftFromNorth(){
+        //Given a rover deployed facing NORTH (default)
+        Rover rover = new Rover();
+        //When the rover turns right
+        rover.turnRover("L");
+        //Then the rover variable will be towards RIGHT
+        Assert.assertEquals("WEST", rover.getD().toString() );
+        Assert.assertEquals("1, 1", rover.showStatus() );
+    }
+    @Test
+    public void testTurnRoverRightFromWest(){
+        //Given a rover deployed facing WEST
+        Rover rover = new Rover().withDirection(Direction.WEST);
+        //When the rover turns right
+        rover.turnRover("R");
+        //Then the rover should be facing NORTH
+        Assert.assertEquals("NORTH", rover.getD().toString() );
+        Assert.assertEquals("1, 1", rover.showStatus() );
+    }
+    @Test
+    public void testRoverMovingForward(){
+        Rover rover = new Rover(); //Default (1,1,N)
+        rover.moveForward();
+        Assert.assertEquals("1, 2",rover.showStatus());
+    }
+    @Test
+    public void testRoverDontCrossEdges(){
+        Plateau plateau = new Plateau(4,4);
+        Rover rover = new Rover().withCoordinates(4,4).withPlateau(plateau); // Default NORTH
+        rover.moveForward();
+        Assert.assertEquals("4, 4", rover.showStatus());
+    }
+    @Test
+    public void testRoverHasAPlateau(){
+        Rover rover = new Rover(); // Given a rover deployed without a plateau
+        Assert.assertFalse(rover.isDeployed()); // Returns false
     }
 }
