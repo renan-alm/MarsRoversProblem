@@ -7,6 +7,7 @@ public class MarsRoversMain {
         // NEW Requirements:
         // 5. Objects out of Status or History - Check
         // 6. Implement a REST API   --- CXF
+        // 7. Can you use Stream?
 
 
         Config config = Config.getInstance();
