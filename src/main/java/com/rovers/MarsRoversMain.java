@@ -1,5 +1,8 @@
 package com.rovers;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class MarsRoversMain {
 
     public static void main(String[] args) {
@@ -9,8 +12,11 @@ public class MarsRoversMain {
         // 6. Implement a REST API   --- CXF
         // 7. Can you use Stream?
 
+        Logger cLogger = LoggerFactory.getLogger(MarsRoversMain.class);
 
         Config config = Config.getInstance();
+
+        cLogger.info("Test");
 
         System.out.println("== Mars Rovers Problem ==");
 
