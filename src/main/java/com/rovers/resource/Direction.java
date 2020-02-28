@@ -1,4 +1,4 @@
-package com.rovers;
+package com.rovers.resource;
 
 public enum Direction {
     NORTH, EAST, SOUTH, WEST;

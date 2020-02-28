@@ -1,8 +1,8 @@
 package com.rover.tests;
 
-import com.rovers.Direction;
-import com.rovers.Plateau;
-import com.rovers.Rover;
+import com.rovers.resource.Direction;
+import com.rovers.resource.PlateauResourceImpl;
+import com.rovers.resource.Rover;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -11,9 +11,9 @@ public class MarsRoversTest {
     @Test
     public void testRoverWithPlateauLimits(){
         // Given a Rover deployed on a plateau
-        Plateau plateau = new Plateau(8,8);
+        PlateauResourceImpl plateauResourceImpl = new PlateauResourceImpl(8,8);
         // When a Rover is instantiated
-        Rover rover = new Rover().withPlateau(plateau);
+        Rover rover = new Rover().withPlateau(plateauResourceImpl);
         // Then the rover limits will be defined according to the plateau
         Assert.assertEquals(8, rover.getEdgeX());
         Assert.assertEquals(8, rover.getEdgeY());
@@ -56,8 +56,8 @@ public class MarsRoversTest {
     }
     @Test
     public void testRoverDontCrossEdges(){
-        Plateau plateau = new Plateau(4,4);
-        Rover rover = new Rover().withCoordinates(4,4).withPlateau(plateau); // Default NORTH
+        PlateauResourceImpl plateauResourceImpl = new PlateauResourceImpl(4,4);
+        Rover rover = new Rover().withCoordinates(4,4).withPlateau(plateauResourceImpl); // Default NORTH
         rover.moveForward();
         Assert.assertEquals("4, 4", rover.showStatus());
     }
