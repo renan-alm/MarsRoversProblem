@@ -1,4 +1,4 @@
-package com.rovers.resource;
+package com.rovers;
 
 
 import java.io.IOException;

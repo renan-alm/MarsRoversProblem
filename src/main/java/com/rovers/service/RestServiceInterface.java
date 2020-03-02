@@ -2,7 +2,7 @@ package com.rovers.service;
 
 import javax.ws.rs.core.Response;
 
-public interface IRestService<T> {
+public interface RestServiceInterface<T> {
 
     Response execute(T params);
 

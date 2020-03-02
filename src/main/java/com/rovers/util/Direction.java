@@ -1,4 +1,4 @@
-package com.rovers.resource;
+package com.rovers.util;
 
 public enum Direction {
     NORTH, EAST, SOUTH, WEST;
@@ -9,12 +9,4 @@ public enum Direction {
     public Direction previous(){
         return values()[ordinal()-1];
     }
-
-/*    }
-    public Direction resetN(){
-        return values()[0];
-    }
-    public Direction resetN(){
-        return values()[3];
-    }*/
 }

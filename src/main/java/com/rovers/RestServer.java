@@ -1,8 +1,7 @@
 package com.rovers;
 
 import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-import com.rovers.resource.Config;
-import com.rovers.resource.PlateauResourceImpl;
+import com.rovers.resource.MarsRoversResourceImpl;
 import org.apache.cxf.endpoint.Server;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.jaxrs.lifecycle.SingletonResourceProvider;
@@ -23,16 +22,15 @@ public class RestServer {
         factoryBean = new JAXRSServerFactoryBean();
         factoryBean.setResourceProviders(
                 Arrays.asList(
-                        new SingletonResourceProvider(new PlateauResourceImpl()),
-                        new SingletonResourceProvider(new HealthResourceImpl())
+                        new SingletonResourceProvider(new MarsRoversResourceImpl())
                 )
         );
 
         factoryBean.setProviders(
                 Arrays.asList(
-                        new GetPerfectNumberListValidationFilter(),
-                        new JacksonJsonProvider(),
-                        new CheckPerfectNumberValidationFilter()
+                        //new GetPerfectNumberListValidationFilter(),
+                        //new CheckPerfectNumberValidationFilter(),
+                        new JacksonJsonProvider()
                 )
         );
 
